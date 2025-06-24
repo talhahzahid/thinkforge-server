@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import Users from "../models/user.models";
+import Users from "../models/user.models.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();
@@ -63,7 +63,7 @@ const signIn = async (req, res) => {
     }
     const refreshToken = generateRefreshToken(findUser);
     const accessToken = generateAccessToken(findUser);
-    res.cookies("refreshToken", refreshToken, {
+    res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: "None",
@@ -80,4 +80,13 @@ const signIn = async (req, res) => {
   }
 };
 
-export { signUp, signIn };
+const logOut = (req, res) => {
+  try {
+    res.clearCookie("refreshToken");
+    res.status(200).json({ message: "logout Successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "An Error Occurred" });
+  }
+};
+
+export { signUp, signIn, logOut };

@@ -5,8 +5,15 @@ import connectdb from "./src/db/index.js";
 import router from "./src/routes/user.routes.js";
 import blogRouter from "./src/routes/blog.routes.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 const app = express();
 const port = process.env.port;
+app.use(
+  cors({
+    origin: ["http://localhost:8000", "https://thinkforge-server.vercel.app"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

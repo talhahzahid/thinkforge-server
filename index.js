@@ -9,7 +9,7 @@ const port = process.env.port;
 app.use(express.json());
 app.use(cookieParser());
 app.get("/", (req, res) => {
-  res.send("Hello World Server!");
+  res.send("Hello World Server Depoly!");
 });
 app.use("/api/v1", router);
 

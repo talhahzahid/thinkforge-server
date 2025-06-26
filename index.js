@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import connectdb from "../src/db/index.js";
-import router from "../src/routes/user.routes.js";
-import blogRouter from "../src/routes/blog.routes.js";
+import connectdb from "./src/db/index.js";
+import router from "./src/routes/user.routes.js";
+import blogRouter from "./src/routes/blog.routes.js";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";

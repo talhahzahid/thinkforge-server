@@ -4,7 +4,7 @@ import Users from "../models/user.models.js";
 
 export const authenticate = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-  console.log("Auth Header:", authHeader);
+  // console.log("Auth Header:", authHeader);
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res

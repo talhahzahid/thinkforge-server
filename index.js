@@ -9,14 +9,14 @@ const port = process.env.port;
 app.use(express.json());
 app.use(cookieParser());
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello World Server!");
 });
 app.use("/api/v1", router);
 
 connectdb()
   .then(() => {
-    app.listen(process.env.port, () => {
-      console.log("Server Is Running At Port", process.env.port);
+    app.listen(port, () => {
+      console.log("Server Is Running At Port", port);
     });
   })
   .catch((err) => {

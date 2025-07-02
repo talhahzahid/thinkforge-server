@@ -1,6 +1,31 @@
 import Users from "../models/user.models.js";
 import blogs from "../models/blog.models.js";
 
+import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
+const uploadImageToCloudinary = async (localpath) => {
+  console.log("Uploading image from path:", localpath);
+  cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET,
+    secure: true,
+  });
+  try {
+    const uploadResult = await cloudinary.uploader.upload(localpath, {
+      resource_type: "auto",
+    });
+    fs.unlinkSync(localpath);
+    return uploadResult.url;
+  } catch (error) {
+    console.error("Cloudinary upload error:", error);
+    if (fs.existsSync(localpath)) {
+      fs.unlinkSync(localpath);
+    }
+    return null;
+  }
+};
+
 // add blog
 const addBlog = async (req, res) => {
   const { title, description } = req.body;
@@ -10,12 +35,16 @@ const addBlog = async (req, res) => {
   if (!description) {
     return res.status(400).json({ message: "Description is required" });
   }
+  if (!req.file) return res.status(400).json({ message: "Image is required" });
+
   if (!req.user) {
     return res.status(401).json({ message: "User unauthorized" });
   }
   try {
     const userRef = req.user;
-    await blogs.create({ title, description, userRef });
+    const imageUrl = await uploadImageToCloudinary(req.file.path);
+    console.log(imageUrl)
+    await blogs.create({ title, description, userRef, imageUrl });
     res.status(201).json({ message: "Blog added successfully", userRef });
   } catch (error) {
     console.error("Add Blog Error:", error);

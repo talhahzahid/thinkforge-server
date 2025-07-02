@@ -11,10 +11,14 @@ const app = express();
 const port = process.env.port;
 app.use(
   cors({
-    origin: ["http://localhost:8000", "https://thinkforge-server.vercel.app"],
+    origin: [
+      "http://localhost:5173", // your local frontend
+      "https://thinkforge-client.vercel.app", // your deployed frontend
+    ],
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

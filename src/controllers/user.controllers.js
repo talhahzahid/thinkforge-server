@@ -68,6 +68,11 @@ const signIn = async (req, res) => {
       secure: true,
       sameSite: "None",
     });
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
     res.status(200).json({
       message: "Login successful",
       user: findUser,

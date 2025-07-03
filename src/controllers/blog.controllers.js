@@ -1,6 +1,5 @@
 import Users from "../models/user.models.js";
 import blogs from "../models/blog.models.js";
-
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 const uploadImageToCloudinary = async (localpath) => {
@@ -43,7 +42,7 @@ const addBlog = async (req, res) => {
   try {
     const userRef = req.user;
     const imageUrl = await uploadImageToCloudinary(req.file.path);
-    console.log(imageUrl)
+    console.log(imageUrl);
     await blogs.create({ title, description, userRef, imageUrl });
     res.status(201).json({ message: "Blog added successfully", userRef });
   } catch (error) {

@@ -10,11 +10,7 @@ import { authenticate } from "../middleware/userRef.middleware.js";
 const router = express.Router();
 import { upload } from "../middleware/multer.middleware.js";
 // router.post("/addblog", authenticate, upload.single("imageUrl"), addBlog);
-router.post("/addblog", upload.single("imageUrl"), (req, res) => {
-  console.log("Title:", req.body.title);
-  console.log("Description:", req.body.description);
-  console.log("File Info:", req.file);
-});
+router.post("/addblog", upload.single("imageUrl"))
 router.get("/getblog", getAllBlog);
 router.get("/getblogbyid/:id", authenticate, getBlogById);
 router.post("/deleteblog/:id", authenticate, deleteBlog);

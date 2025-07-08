@@ -24,8 +24,6 @@ const uploadImageToCloudinary = async (localpath) => {
     return null;
   }
 };
-
-// add blog
 const addBlog = async (req, res) => {
   const { title, description } = req.body;
   if (!title) {
